@@ -1,3 +1,5 @@
+
+/* We use !important to override the #join-screen ID specificity. */
 .hidden {
     display: none !important;
 }
@@ -82,6 +84,16 @@ h1 {
     font-weight: 300;
 
     color: #333;
+}
+#room-display-name {
+    font-size: 1.2em;
+    font-weight: 300;
+    color: #555;
+    margin: -10px 0 10px 0; /* Pulls it closer to the title */
+    padding: 5px 15px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .toolbar {
