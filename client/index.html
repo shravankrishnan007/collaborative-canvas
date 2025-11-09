@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <title>Collaborative Canvas</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Real-Time Drawing Canvas</h1>
+        <div class="toolbar">
+            <label>Color:</label>
+            <div id ="color-swatch" class="color-swatchfake" title="Double click to open picker and single click to select last used colour"></div>
+            <input type="color" id ="color" value="#000000" class="color-input-hidden">
+            <div id = "recent-colors-container"></div>
+            
+
+           
+            <label for = "strokeWidth">Width:</label>
+            <input type="range" id="strokeWidth" min="1" max="20" value="5">
+        <div class = "tool-group">
+            <button id="eraser-btn">Eraser</button>
+                
+            
+            <div id="eraser-slider-container" class="eraser-slider hidden">
+                <label for="eraserWidth">Size:</label>
+                <input type="range" id="eraserWidth" min="1" max="50" value="10">
+            </div>
+        </div>
+            
+            <button id="undo-btn">Undo</button>
+            <button id="redo-btn">Redo</button>
+            
+        </div>
+        <div id= "canvas-container">
+            <canvas id = "drawing-canvas"></canvas>
+            <canvas id = "cursor-canvas"></canvas>
+            <canvas id="local-cursor-canvas"></canvas>
+        </div>
+        
+        <script src = "/socket.io/socket.io.js"></script>
+       
+        <script src = "canvas.js"></script>
+        <script src = "websocket.js"></script>
+        <script src = "main.js"></script>
+
+       
+    </body>
+</html>
