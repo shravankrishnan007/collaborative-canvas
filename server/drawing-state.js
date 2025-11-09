@@ -99,7 +99,7 @@ function redoLastStroke(room){
     let lastRedoOp = roomState.redoStack.pop();
     roomState.actionHistory.push(lastRedoOp);
     while (lastRedoOp?.type !== 'stroke_end' && roomState.redoStack.length > 0) {
-        lastRedoOp = redoStack.pop();
+        lastRedoOp = roomState.redoStack.pop();
         roomState.actionHistory.push(lastRedoOp);
     }
         saveRoomState(room);
