@@ -7,6 +7,18 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div id="fps-counter">FPS: --</div>
+        
+        <div id="join-screen">
+            <div class = "join-box">
+                <h2>Join or Create a Room</h2>
+                <p>Enter a room name to start.</p>
+                <input type="text" id="room-name-input" placeholder="my-drawing-room">
+                <button id="join-room-btn">Join</button>
+            </div>
+        </div>
+        <div id="app-container" class="hidden">
+
         <h1>Real-Time Drawing Canvas</h1>
         <div class="toolbar">
             <label>Color:</label>
@@ -37,6 +49,7 @@
             <canvas id = "cursor-canvas"></canvas>
             <canvas id="local-cursor-canvas"></canvas>
         </div>
+        </div>
         
         <script src = "/socket.io/socket.io.js"></script>
        
@@ -44,6 +57,6 @@
         <script src = "websocket.js"></script>
         <script src = "main.js"></script>
 
-       
+      
     </body>
 </html>

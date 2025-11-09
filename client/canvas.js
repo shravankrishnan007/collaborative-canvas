@@ -175,6 +175,31 @@ canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
 canvas.addEventListener('mouseout', stopDrawing);
+function getTouchPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: e.touches[0].clientX - rect.left,
+        y: e.touches[0].clientY - rect.top
+    };
+}
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touchPos = getTouchPos(e);
+    startDrawing({offsetX: touchPos.x, offsetY: touchPos.y});
+
+},{passive: false});
+canvas.addEventListener('touchmove',(e) => {
+    e.preventDefault();
+    const touchPos = getTouchPos(e);
+    draw({ offsetX: touchPos.x, offsetY: touchPos.y});
+
+},{passive: false});
+canvas.addEventListener('touchend', (e) => {
+    stopDrawing();
+});
+canvas.addEventListener('touchcancel', (e) => {
+    stopDrawing();
+});
 canvas.addEventListener('mousemove', (e) => {
     socket.emit('cursor_move',{
         x: e.offsetX,

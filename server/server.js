@@ -16,45 +16,64 @@ app.get('/',(req, res) => {
     res.sendFile(path.join(clientPath, 'index.html'));
 
 });
+const socketRoomMap = {};
 
 io.on('connection', (socket) => {
     console.log('A user has connected. Socket ID:', socket.id);
-    socket.emit('canvas_history', drawingState.actionHistory);
-    socket.on('set_user_name', (name) => {
-        socket.userName = name;
+    socket.on('join_room' , (room, userName) => {
+        socket.join(room);
+        socketRoomMap[socket.id] = room;
+        socket.userName = userName;
+        console.log(`User ${userName} (ID: ${socket.id}) joined room: ${room}`);
+
+        socket.emit('canvas_history', drawingState.getHistory(room));
     });
+    
+    
     socket.on('drawing_event',(data)=>{
-        drawingState.addOperation(data);
-        socket.broadcast.emit('draw_this', data);
+        const room = socketRoomMap[socket.id];
+        if (!room) return;
+        drawingState.addOperation(room, data);
+        socket.to(room).emit('draw_this', data);
     });
     socket.on('end_stroke', () => {
-        drawingState.addStrokeMarker();
+        const room = socketRoomMap[socket.id];
+        if (!room) return;
+        drawingState.addStrokeMarker(room);
     });
     socket.on('cursor_move', (data)=>{
-        socket.broadcast.emit('user_cursor',{
+        const room = socketRoomMap[socket.id];
+        if(!room) return;
+        socket.to(room).emit('user_cursor',{
             id: socket.userName || socket.id,
-            x: data.x,
-            y: data.y,
-            color: data.color,
-            tool: data.tool
+            ...data
         });
     });
     socket.on('disconnect', () => {
         console.log('A user has disconnected. Socket ID:' , socket.id);
-        io.emit('user_disconnected', socket.id);
+        const room = socketRoomMap[socket.id];
+        if(room) {
+            io.in(room).emit('user_disconnected' , socket.userName || socket.id);
+            delete socketRoomMap[socket.id];
+        }
+    
     });
     socket.on('undo',() => {
-        const newHistory = drawingState.undoLastStroke();
+        const room = socketRoomMap[socket.id];
+        if(!room) return;
+        const newHistory = drawingState.undoLastStroke(room);
 
         if (newHistory){
-            io.emit('redraw_canvas',newHistory);
+            io.in(room).emit('redraw_canvas',newHistory);
         }
     });
 
     socket.on('redo',() => {
-        const newHistory = drawingState.redoLastStroke();
+        const room = socketRoomMap[socket.id];
+        if(!room) return;
+        const newHistory = drawingState.redoLastStroke(room);
         if (newHistory) {
-            io.emit('redraw_canvas', newHistory);
+            io.in(room).emit('redraw_canvas', newHistory);
         }
     });
     
