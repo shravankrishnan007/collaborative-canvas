@@ -1,4 +1,10 @@
 # Real-Time Collaboration Drawing Canvas
+
+## Live Demo
+
+**You can use the live deployed application here:**
+**[https://collaborative-canvas-2ndk.onrender.com/](https://collaborative-canvas-2ndk.onrender.com/)**
+
 This is a multi user, real time drawing application built from scratch with Node.js and vanilla JavaScript.
 It features a 3-layer canvas system for efficient rendering, real time synchronization of drawing and cursors, and a robust global undo/redo system.
  ## Core Features
