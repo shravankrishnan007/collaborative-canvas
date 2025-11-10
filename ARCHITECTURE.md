@@ -16,7 +16,7 @@ All events are room-based. The server identifies the client's room via their `so
     * `cursor_move (data)`: Sent on `mousemove`. Contains cursor position, color, and current tool.
     * `undo ()`: Sent on `Ctrl+Z` or button click.
     * `redo ()`: Sent on `Ctrl+Y` or button click.
-    * `ping ()`: Sent every 2 seconds to calculate latency.
+    
 
 * **Server-to-Client:**
     * `canvas_history (history)`: Sent *only* to the joining client. Contains the entire `actionHistory` for their room.
@@ -24,7 +24,7 @@ All events are room-based. The server identifies the client's room via their `so
     * `user_cursor (data)`: Broadcast to a room (`socket.to(room)`). Contains cursor ID/name, position, color, and tool.
     * `redraw_canvas (history)`: Broadcast to *all* in room (`io.in(room)`). Sent after undo/redo.
     * `user_disconnected (id)`: Broadcast to a room when a user leaves.
-    * `pong ()`: Sent back to a client immediately after a `ping`.
+   
 
 ## 3. Undo/Redo & Persistence Strategy
 
