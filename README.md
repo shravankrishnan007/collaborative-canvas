@@ -39,6 +39,7 @@ It features a 3-layer canvas system for efficient rendering, real time synchroni
     Open `http://localhost:3000` in your browser.
 
  ## How to Test
+ * **Note:** Double click the color palette to open color selector.
  1.  Open `http://localhost:3000` in a regular browser window (User A).
 2.  Open `http://localhost:3000` in an **incognito** browser window (User B).
 3.  **Test Rooms:**
